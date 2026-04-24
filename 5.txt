@@ -1,0 +1,264 @@
+PRACT_5
+spandan@MSIKATANA:/mnt/c/Users/Spandan$ sudo mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.0.45-0ubuntu0.24.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> -- Step 1: Database
+Departments (
+    DeptID INT PRIMARY KEY,
+    DeptName VARCHAR(50)
+);
+
+CREATE TABLE Employees (
+    EmpID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    DeptID INT,
+    Salary DECIMAL(10,2),
+    FOREIGN KEY (DeptID) REFERENCES Departments(DeptID)
+);
+
+-- Step 3: Insert
+INSERT INTO Departments VALUES
+(1, 'HR'),
+(2, 'IT'),
+(3, 'Finance');
+
+INSERT INTO Employees VALUES
+(101, 'Alice', 1, 50mysql> CREATE DATABASE IF NOT EXISTS abc;
+000),
+(102, 'Bob', 2, 60000),
+(103, 'Charlie', 3, 55000),
+(104, 'David', 2, 45000),
+(105, 'Eve', 3, 70000);
+
+-- INNER JOIN
+SELECT e.EmpID, e.Name, d.DeptName, e.Salary
+FROM Employees e
+INNER JOIN Departments d ON e.DeptID = d.DeptID;
+
+-- LEFT JOIN
+SELECT e.EmpID, e.Name, d.DeptName
+FROM Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> USE abc;
+Employees e
+LEFT JOIN Departments d ON e.DeptID = d.DeptID;
+
+-- RIGHT JOIN
+SELECT e.EmpID, e.Name, d.DeptName
+FROM Employees e
+RIGHT JOIN Departments d ON e.DeptID = d.DeptID;
+
+-- FULL OUTER JOIN (MySQL way)
+SELECT e.EmpID, e.Name, d.DeptName
+FROM EmployeeReading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+s e
+LEFT JOIN DeDatabase changed
+mysql>
+mysql> -- Step 2: Tables
+mysql> CREATE TABLE Departments (
+    ->     DeptID INT PRIMARY KEY,
+    ->     DeptName VARCHAR(50)
+    -> );
+.DeptID = d.DeptID
+UNION
+SELECT e.EmpID, e.Name, d.DeptName
+FROM Employees e
+RIGHT JOIN Departments d ON e.DeptID = d.DeptID;
+
+-- Views
+CREATE OR REPLACE VIEW EmployeeDetails AS
+SELECT e.EmpID, e.Name, d.DeptName, e.Salary
+FROM Employees e
+INNER JOIN Departments d ON e.DeptID = d.DeptID;
+
+SELECT * FROM EmployeeDetails;
+
+CREATE OR REPLACE VIEW HighSalaryEmployees AS
+SELECT e.EmpID, e.Name, d.DeptName, e.Salary
+FROM Employees e
+INNER JOIN Departments d ON e.DeptID = d.DeptID
+WHERE e.Salary > 55000;
+
+SELECT * FROM HighSalaryEmployees;
+
+DROP VIEW IF EXISTS HighSalaryEmployees;
+
+SELECT * FROM Employees;
+SELECT * FROM Departments;Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> CREATE TABLE Employees (
+    ->     EmpID INT PRIMARY KEY,
+    ->     Name VARCHAR(50),
+    ->     DeptID INT,
+    ->     Salary DECIMAL(10,2),
+    ->     FOREIGN KEY (DeptID) REFERENCES Departments(DeptID)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> -- Step 3: Insert
+mysql> INSERT INTO Departments VALUES
+    -> (1, 'HR'),
+    -> (2, 'IT'),
+    -> (3, 'Finance');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> INSERT INTO Employees VALUES
+    -> (101, 'Alice', 1, 50000),
+    -> (102, 'Bob', 2, 60000),
+    -> (103, 'Charlie', 3, 55000),
+    -> (104, 'David', 2, 45000),
+    -> (105, 'Eve', 3, 70000);
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> -- INNER JOIN
+mysql> SELECT e.EmpID, e.Name, d.DeptName, e.Salary
+    -> FROM Employees e
+    -> INNER JOIN Departments d ON e.DeptID = d.DeptID;
++-------+---------+----------+----------+
+| EmpID | Name    | DeptName | Salary   |
++-------+---------+----------+----------+
+|   101 | Alice   | HR       | 50000.00 |
+|   102 | Bob     | IT       | 60000.00 |
+|   104 | David   | IT       | 45000.00 |
+|   103 | Charlie | Finance  | 55000.00 |
+|   105 | Eve     | Finance  | 70000.00 |
++-------+---------+----------+----------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> -- LEFT JOIN
+mysql> SELECT e.EmpID, e.Name, d.DeptName
+    -> FROM Employees e
+    -> LEFT JOIN Departments d ON e.DeptID = d.DeptID;
++-------+---------+----------+
+| EmpID | Name    | DeptName |
++-------+---------+----------+
+|   101 | Alice   | HR       |
+|   102 | Bob     | IT       |
+|   103 | Charlie | Finance  |
+|   104 | David   | IT       |
+|   105 | Eve     | Finance  |
++-------+---------+----------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> -- RIGHT JOIN
+mysql> SELECT e.EmpID, e.Name, d.DeptName
+    -> FROM Employees e
+    -> RIGHT JOIN Departments d ON e.DeptID = d.DeptID;
++-------+---------+----------+
+| EmpID | Name    | DeptName |
++-------+---------+----------+
+|   101 | Alice   | HR       |
+|   102 | Bob     | IT       |
+|   104 | David   | IT       |
+|   103 | Charlie | Finance  |
+|   105 | Eve     | Finance  |
++-------+---------+----------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> -- FULL OUTER JOIN (MySQL way)
+mysql> SELECT e.EmpID, e.Name, d.DeptName
+    -> FROM Employees e
+    -> LEFT JOIN Departments d ON e.DeptID = d.DeptID
+    -> UNION
+    -> SELECT e.EmpID, e.Name, d.DeptName
+    -> FROM Employees e
+    -> RIGHT JOIN Departments d ON e.DeptID = d.DeptID;
++-------+---------+----------+
+| EmpID | Name    | DeptName |
++-------+---------+----------+
+|   101 | Alice   | HR       |
+|   102 | Bob     | IT       |
+|   103 | Charlie | Finance  |
+|   104 | David   | IT       |
+|   105 | Eve     | Finance  |
++-------+---------+----------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> -- Views
+mysql> CREATE OR REPLACE VIEW EmployeeDetails AS
+    -> SELECT e.EmpID, e.Name, d.DeptName, e.Salary
+    -> FROM Employees e
+    -> INNER JOIN Departments d ON e.DeptID = d.DeptID;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> SELECT * FROM EmployeeDetails;
++-------+---------+----------+----------+
+| EmpID | Name    | DeptName | Salary   |
++-------+---------+----------+----------+
+|   101 | Alice   | HR       | 50000.00 |
+|   102 | Bob     | IT       | 60000.00 |
+|   104 | David   | IT       | 45000.00 |
+|   103 | Charlie | Finance  | 55000.00 |
+|   105 | Eve     | Finance  | 70000.00 |
++-------+---------+----------+----------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> CREATE OR REPLACE VIEW HighSalaryEmployees AS
+    -> SELECT e.EmpID, e.Name, d.DeptName, e.Salary
+    -> FROM Employees e
+    -> INNER JOIN Departments d ON e.DeptID = d.DeptID
+    -> WHERE e.Salary > 55000;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> SELECT * FROM HighSalaryEmployees;
++-------+------+----------+----------+
+| EmpID | Name | DeptName | Salary   |
++-------+------+----------+----------+
+|   102 | Bob  | IT       | 60000.00 |
+|   105 | Eve  | Finance  | 70000.00 |
++-------+------+----------+----------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> DROP VIEW IF EXISTS HighSalaryEmployees;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> SELECT * FROM Employees;
++-------+---------+--------+----------+
+| EmpID | Name    | DeptID | Salary   |
++-------+---------+--------+----------+
+|   101 | Alice   |      1 | 50000.00 |
+|   102 | Bob     |      2 | 60000.00 |
+|   103 | Charlie |      3 | 55000.00 |
+|   104 | David   |      2 | 45000.00 |
+|   105 | Eve     |      3 | 70000.00 |
++-------+---------+--------+----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Departments;
++--------+----------+
+| DeptID | DeptName |
++--------+----------+
+|      1 | HR       |
+|      2 | IT       |
+|      3 | Finance  |
++--------+----------+
+3 rows in set (0.00 sec)
+
+mysql>

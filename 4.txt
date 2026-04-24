@@ -1,0 +1,133 @@
+PRACT_4
+spandan@MSIKATANA:/mnt/c/Users/Spandan$ sudo mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.45-0ubuntu0.24.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> -- Step 1: Create & Select Database
+mysql> CREATE DATABASE IF NOT EXISTS abc;
+
+-- Step 2: Create Table
+CREATE TABLE Sales (
+    SaleID INT PRIMARY KEY,
+    Product VARCHAR(50),
+    Quantity INT,
+    Price DECIMAL(10,2),
+    Region VARCHAR(50)
+);
+
+-- StepQuery OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> USE abc;
+ 3: Insert Data
+INSERT INTO Sales VALUES
+(1, 'Laptop', 5, 60000, 'North'),
+(2, 'Laptop', 3, 62000, 'South'),
+(3, 'Phone', 10, 20000, 'North'),
+(4, 'Phone', 8, 21000, 'South'),
+(5, 'Tablet', 4, 30000, 'East'),
+(6, 'Tablet', 6, 32000, 'West')Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+,
+(7, 'Laptop', 2, 61000, 'East'Database changed
+),
+(8, 'Phone', mysql>
+mysql> -- Step 2: Create Table
+mysql> CREATE TABLE Sales (
+    ->     SaleID INT PRIMARY KEY,
+    ->     Product VARCHAR(50),
+    ->     Quantity INT,
+    ->     Price DECIMAL(10,2),
+    ->     Region VARCHAR(50)
+    -> );
+Aggregate Functions
+SELECT Region,
+       SUM(Quantity) AS Total_Quantity,
+       AVG(Price) AS Avg_Price,
+       MAX(Price) AS Max_Price,
+       MIN(Price) AS Min_Price
+FROM Sales
+GROUP BY Region;
+
+-- Step 5: HAVING Clause
+SELECT Product, SUM(Quantity) AS Total_Sold
+FROM Sales
+GROUP BY Product
+HAVING SUM(Quantity) > 10;
+
+-- Step 6: View Data
+SELECT * FROM Sales;Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> -- Step 3: Insert Data
+mysql> INSERT INTO Sales VALUES
+    -> (1, 'Laptop', 5, 60000, 'North'),
+    -> (2, 'Laptop', 3, 62000, 'South'),
+    -> (3, 'Phone', 10, 20000, 'North'),
+    -> (4, 'Phone', 8, 21000, 'South'),
+    -> (5, 'Tablet', 4, 30000, 'East'),
+    -> (6, 'Tablet', 6, 32000, 'West'),
+    -> (7, 'Laptop', 2, 61000, 'East'),
+    -> (8, 'Phone', 12, 19000, 'West');
+Query OK, 8 rows affected (0.00 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> -- Step 4: Aggregate Functions
+mysql> SELECT Region,
+    ->        SUM(Quantity) AS Total_Quantity,
+    ->        AVG(Price) AS Avg_Price,
+    ->        MAX(Price) AS Max_Price,
+    ->        MIN(Price) AS Min_Price
+    -> FROM Sales
+    -> GROUP BY Region;
++--------+----------------+--------------+-----------+-----------+
+| Region | Total_Quantity | Avg_Price    | Max_Price | Min_Price |
++--------+----------------+--------------+-----------+-----------+
+| North  |             15 | 40000.000000 |  60000.00 |  20000.00 |
+| South  |             11 | 41500.000000 |  62000.00 |  21000.00 |
+| East   |              6 | 45500.000000 |  61000.00 |  30000.00 |
+| West   |             18 | 25500.000000 |  32000.00 |  19000.00 |
++--------+----------------+--------------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> -- Step 5: HAVING Clause
+mysql> SELECT Product, SUM(Quantity) AS Total_Sold
+    -> FROM Sales
+    -> GROUP BY Product
+    -> HAVING SUM(Quantity) > 10;
++---------+------------+
+| Product | Total_Sold |
++---------+------------+
+| Phone   |         30 |
++---------+------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> -- Step 6: View Data
+mysql> SELECT * FROM Sales;
++--------+---------+----------+----------+--------+
+| SaleID | Product | Quantity | Price    | Region |
++--------+---------+----------+----------+--------+
+|      1 | Laptop  |        5 | 60000.00 | North  |
+|      2 | Laptop  |        3 | 62000.00 | South  |
+|      3 | Phone   |       10 | 20000.00 | North  |
+|      4 | Phone   |        8 | 21000.00 | South  |
+|      5 | Tablet  |        4 | 30000.00 | East   |
+|      6 | Tablet  |        6 | 32000.00 | West   |
+|      7 | Laptop  |        2 | 61000.00 | East   |
+|      8 | Phone   |       12 | 19000.00 | West   |
++--------+---------+----------+----------+--------+
+8 rows in set (0.00 sec)
+
+mysql>

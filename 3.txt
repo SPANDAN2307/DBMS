@@ -1,0 +1,190 @@
+PRACT_3
+spandan@MSIKATANA:/mnt/c/Users/Spandan$ sudo mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.45-0ubuntu0.24.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> -- Step 1: Create & Select Database
+S abc;
+USE abc;
+mysql> CREATE DATABASE IF NOT EXISTS abc;
+
+-- Step 2: Create Table
+CREATE TABLE abc (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    sal DECIMAL(10,2),
+    dept VARCHAR(50)
+);
+
+-- Step 3: Insert Data
+INSERT INTO abc VALUES
+(1, 'A', 50000, 'X'),
+(2, 'B', 60000, 'Y'),
+(3, 'C', 55000, 'Z'),
+(4, 'D', 45000, 'Y');
+
+-- Step 4: DML
+INSERT INTO abc VALUES (5, 'E', 70000, 'Z');
+
+SELECT * FROM abc;
+
+UPDATE abc SET sal = sal + 5000 WHERE dept = 'Y';
+
+DELETE FROM abc WHERE name LIKE 'D%';
+
+-- Step 5: Functions
+UPDATE abc
+SET name = CONCAT(name, '_U')
+WHERE sal > 55000 AND dept IN ('Z','Y');
+
+SELECT * FROM abc;
+
+-- Step 6: DCL (Optional)
+CREATE ROLE xyz_role;
+
+CREATE USER 'user1'@'localhost' IDENTIFIED BY '1234';
+
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> USE abc;
+GRANT SELECT, INSERT ON abc.* TO xyz_role;
+GRANT xyz_role TO 'user1'@'localhost';
+
+REVOKE INSERT ON abc.* FROM xyz_role;
+
+-- Step 7: TCL
+START TRANSACTION;
+
+UPDATE abc SET sal = sal - 2000 WHERE id = 1;
+
+SAVEDatabase changed
+mysql>
+mysql> -- Step 2: Create Table
+mysql> CREATE TABLE abc (
+    ->     id INT PRIMARY KEY,
+    ->     name VARCHAR(50),
+    ->     sal DECIMAL(10,2),
+    ->     dept VARCHAR(50)
+    -> );
+TE abc SET sal = sal - 2000 WHERE id = 2;
+
+ROLLBACK TO sp1;
+
+COMMIT;
+
+SELECT * FROM abc;Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> -- Step 3: Insert Data
+mysql> INSERT INTO abc VALUES
+    -> (1, 'A', 50000, 'X'),
+    -> (2, 'B', 60000, 'Y'),
+    -> (3, 'C', 55000, 'Z'),
+    -> (4, 'D', 45000, 'Y');
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> -- Step 4: DML
+mysql> INSERT INTO abc VALUES (5, 'E', 70000, 'Z');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>
+mysql> SELECT * FROM abc;
++----+------+----------+------+
+| id | name | sal      | dept |
++----+------+----------+------+
+|  1 | A    | 50000.00 | X    |
+|  2 | B    | 60000.00 | Y    |
+|  3 | C    | 55000.00 | Z    |
+|  4 | D    | 45000.00 | Y    |
+|  5 | E    | 70000.00 | Z    |
++----+------+----------+------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> UPDATE abc SET sal = sal + 5000 WHERE dept = 'Y';
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql>
+mysql> DELETE FROM abc WHERE name LIKE 'D%';
+Query OK, 1 row affected (0.00 sec)
+
+mysql>
+mysql> -- Step 5: Functions
+mysql> UPDATE abc
+    -> SET name = CONCAT(name, '_U')
+    -> WHERE sal > 55000 AND dept IN ('Z','Y');
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql>
+mysql> SELECT * FROM abc;
++----+------+----------+------+
+| id | name | sal      | dept |
++----+------+----------+------+
+|  1 | A    | 50000.00 | X    |
+|  2 | B_U  | 65000.00 | Y    |
+|  3 | C    | 55000.00 | Z    |
+|  5 | E_U  | 70000.00 | Z    |
++----+------+----------+------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> -- Step 6: DCL (Optional)
+mysql> CREATE ROLE xyz_role;
+ERROR 1396 (HY000): Operation CREATE ROLE failed for 'xyz_role'@'%'
+mysql>
+mysql> CREATE USER 'user1'@'localhost' IDENTIFIED BY '1234';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> GRANT SELECT, INSERT ON abc.* TO xyz_role;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> GRANT xyz_role TO 'user1'@'localhost';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> REVOKE INSERT ON abc.* FROM xyz_role;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> -- Step 7: TCL
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> UPDATE abc SET sal = sal - 2000 WHERE id = 1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>
+mysql> SAVEPOINT sp1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> UPDATE abc SET sal = sal - 2000 WHERE id = 2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>
+mysql> ROLLBACK TO sp1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> SELECT * FROM abc;

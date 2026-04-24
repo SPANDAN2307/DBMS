@@ -1,0 +1,173 @@
+PRACT_8
+spandan@MSIKATANA:/mnt/c/Users/Spandan$ sudo mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 8.0.45-0ubuntu0.24.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> -- Step 1: Database
+mysql> CREATE DATABASE IF NOT EXISTS abc;
+
+-- Step 2: Tables
+DROP TABLE IF EXISTS Employees;
+CREATE TABLE Employees (
+    EmpID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Salary DECIMAL(10,2)
+);
+
+INSERT INTO Employees VALUES
+(501, 'Alice', 50000),
+(502, 'Bob', 60000),
+(503, 'Charlie', 55000);
+
+DROP TABLE IF EXISTS SalaryAudit;
+CREATE TABLE SalaryAudit (
+    AuditID INT AUTO_INCREMENT PRIMARY KEY,
+    EmpID INT,
+    OldSalary DECIMAL(10,2),
+    NewSalary DECIMAL(10,2),
+    ChangeDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Step 3: Trigger
+DROP TRIGGER IF EXISTS trg_salary_update;
+
+DELIMITER //
+CREATE TRIGGER trg_salary_update
+AFTER UPDATE ON Employees
+FOR Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> USE abc;
+EACH ROW
+BEGIN
+    IF OLD.Salary <> NEW.Salary THEN
+        INSERT INTO SalaryAudit (EmpID, OldSalary, NewSalary)
+        VALUES (OLD.EmpID, OLD.Salary, NEW.Salary);
+    END IF;
+END //
+DELIMITER ;
+
+-- Step 4: Test Trigger
+UPDATE Employees SET Salary = Salary + 2000 WHERE EmpID = 501;
+
+SELECT * FROM Employees;
+SELECT * Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+FROM SalaryAudit;
+
+UPDATE Employees SET Salary = Salary - 1000 WHERE EmpID = 502;
+
+SELECT * FROMDatabase changed
+mysql>
+mysql> -- Step 2: Tables
+mysql> DROP TABLE IF EXISTS Employees;
+ Employees;
+SELECT * FROM SalaryAudit;Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE Employees (
+    ->     EmpID INT PRIMARY KEY,
+    ->     Name VARCHAR(50),
+    ->     Salary DECIMAL(10,2)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> INSERT INTO Employees VALUES
+    -> (501, 'Alice', 50000),
+    -> (502, 'Bob', 60000),
+    -> (503, 'Charlie', 55000);
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> DROP TABLE IF EXISTS SalaryAudit;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+mysql> CREATE TABLE SalaryAudit (
+    ->     AuditID INT AUTO_INCREMENT PRIMARY KEY,
+    ->     EmpID INT,
+    ->     OldSalary DECIMAL(10,2),
+    ->     NewSalary DECIMAL(10,2),
+    ->     ChangeDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> -- Step 3: Trigger
+mysql> DROP TRIGGER IF EXISTS trg_salary_update;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+mysql>
+mysql> DELIMITER //
+mysql> CREATE TRIGGER trg_salary_update
+    -> AFTER UPDATE ON Employees
+    -> FOR EACH ROW
+    -> BEGIN
+    ->     IF OLD.Salary <> NEW.Salary THEN
+    ->         INSERT INTO SalaryAudit (EmpID, OldSalary, NewSalary)
+    ->         VALUES (OLD.EmpID, OLD.Salary, NEW.Salary);
+    ->     END IF;
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql>
+mysql> -- Step 4: Test Trigger
+mysql> UPDATE Employees SET Salary = Salary + 2000 WHERE EmpID = 501;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>
+mysql> SELECT * FROM Employees;
++-------+---------+----------+
+| EmpID | Name    | Salary   |
++-------+---------+----------+
+|   501 | Alice   | 52000.00 |
+|   502 | Bob     | 60000.00 |
+|   503 | Charlie | 55000.00 |
++-------+---------+----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM SalaryAudit;
++---------+-------+-----------+-----------+---------------------+
+| AuditID | EmpID | OldSalary | NewSalary | ChangeDate          |
++---------+-------+-----------+-----------+---------------------+
+|       1 |   501 |  50000.00 |  52000.00 | 2026-04-17 04:49:33 |
++---------+-------+-----------+-----------+---------------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> UPDATE Employees SET Salary = Salary - 1000 WHERE EmpID = 502;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>
+mysql> SELECT * FROM Employees;
++-------+---------+----------+
+| EmpID | Name    | Salary   |
++-------+---------+----------+
+|   501 | Alice   | 52000.00 |
+|   502 | Bob     | 59000.00 |
+|   503 | Charlie | 55000.00 |
++-------+---------+----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM SalaryAudit;
++---------+-------+-----------+-----------+---------------------+
+| AuditID | EmpID | OldSalary | NewSalary | ChangeDate          |
++---------+-------+-----------+-----------+---------------------+
+|       1 |   501 |  50000.00 |  52000.00 | 2026-04-17 04:49:33 |
+|       2 |   502 |  60000.00 |  59000.00 | 2026-04-17 04:49:33 |
++---------+-------+-----------+-----------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql>

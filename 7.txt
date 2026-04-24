@@ -1,0 +1,256 @@
+PRACT_7
+spandan@MSIKATANA:/mnt/c/Users/Spandan$ sudo mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 16
+Server version: 8.0.45-0ubuntu0.24.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> -- Step 1: Database
+mysql> CREATE DATABASE IF NOT EXISTS abc;
+
+-- Step 2: Table
+DROP TABLE IF EXISTS Employees;
+CREATE TABLE Employees (
+    EmpID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Salary DECIMAL(10,2)
+);
+
+INSERT INTO Employees VALUES
+(401, 'Alice', 50000),
+(402, 'Bob', 60000),
+(403, 'Charlie', 55000),
+(404, 'David', 45000),
+(405, 'Eve', 70000);
+
+-- Step 3: Procedure 1
+DROP PROCEDURE IF EXISTS IncreaseSalaryByCursor;
+
+DELIMITER //
+CREATE PROCEDURE IncreaseSalaryByCursor()
+BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE vEmpID INT;
+    DECLARE vSalary DECIMAL(10,2);
+
+    DECLARE cur CURSOR FOR
+        SELECT EmpID, Salary FROM Employees;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND
+        SET done = 1;
+
+    OPEN Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> USE abc;
+oop: LOOP
+        FETCH cur INTO vEmpID, vSalary;
+
+        IF done = 1 THEN
+            LEAVE read_loop;
+        END IF;
+
+        UPDATE Employees
+        SET Salary = vSalary + 1000
+        WHERE EmpID = vReading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+EmpID;
+
+    END LOOP;
+
+    CLOSE cur;
+END //
+DELIMITER ;
+
+-- Call Procedure
+CALL IncreaseSalaryBDatabase changed
+mysql>
+mysql> -- Step 2: Table
+yCursor();
+
+SELEmysql> DROP TABLE IF EXISTS Employees;
+CT * FROM Employees;
+
+-- Step 4: Second Procedure
+DROP TABLE IF EXISTS EmpNames;
+CREATE TABLE EmpNames (Name VARCHAR(50));
+
+DROP PROCEDURE IF EXISTS CollectEmployeeNames;
+
+DELIMITER //
+CREATE PROCEDURE CollectEmployeeNames()
+BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE vName VARCHAR(50);
+
+    DECLARE cur CURSOR FOR
+        SELECT Name FROM Employees;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND
+        SET done = 1;
+
+    OPEN cur;
+
+    read_loop: LOOP
+        FETCH cur INTO vName;
+
+        IF done = 1 THEN
+            LEAVE read_loop;
+        END IF;
+
+        INSERT INTO EmpNames VALUES (vName);
+
+    END LOOP;
+
+    CLOSE cur;
+END //
+DELIMITER ;
+
+-- Call Procedure
+CALL CollectEmployeeNames();
+
+SELECT * FROM EmpNames;Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE Employees (
+    ->     EmpID INT PRIMARY KEY,
+    ->     Name VARCHAR(50),
+    ->     Salary DECIMAL(10,2)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> INSERT INTO Employees VALUES
+    -> (401, 'Alice', 50000),
+    -> (402, 'Bob', 60000),
+    -> (403, 'Charlie', 55000),
+    -> (404, 'David', 45000),
+    -> (405, 'Eve', 70000);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> -- Step 3: Procedure 1
+mysql> DROP PROCEDURE IF EXISTS IncreaseSalaryByCursor;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+mysql>
+mysql> DELIMITER //
+mysql> CREATE PROCEDURE IncreaseSalaryByCursor()
+    -> BEGIN
+    ->     DECLARE done INT DEFAULT 0;
+    ->     DECLARE vEmpID INT;
+    ->     DECLARE vSalary DECIMAL(10,2);
+    ->
+    ->     DECLARE cur CURSOR FOR
+    ->         SELECT EmpID, Salary FROM Employees;
+    ->
+    ->     DECLARE CONTINUE HANDLER FOR NOT FOUND
+    ->         SET done = 1;
+    ->
+    ->     OPEN cur;
+    ->
+    ->     read_loop: LOOP
+    ->         FETCH cur INTO vEmpID, vSalary;
+    ->
+    ->         IF done = 1 THEN
+    ->             LEAVE read_loop;
+    ->         END IF;
+    ->
+    ->         UPDATE Employees
+    ->         SET Salary = vSalary + 1000
+    ->         WHERE EmpID = vEmpID;
+    ->
+    ->     END LOOP;
+    ->
+    ->     CLOSE cur;
+    -> END //
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DELIMITER ;
+mysql>
+mysql> -- Call Procedure
+mysql> CALL IncreaseSalaryByCursor();
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> SELECT * FROM Employees;
++-------+---------+----------+
+| EmpID | Name    | Salary   |
++-------+---------+----------+
+|   401 | Alice   | 51000.00 |
+|   402 | Bob     | 61000.00 |
+|   403 | Charlie | 56000.00 |
+|   404 | David   | 46000.00 |
+|   405 | Eve     | 71000.00 |
++-------+---------+----------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> -- Step 4: Second Procedure
+mysql> DROP TABLE IF EXISTS EmpNames;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+mysql> CREATE TABLE EmpNames (Name VARCHAR(50));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> DROP PROCEDURE IF EXISTS CollectEmployeeNames;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+mysql>
+mysql> DELIMITER //
+mysql> CREATE PROCEDURE CollectEmployeeNames()
+    -> BEGIN
+    ->     DECLARE done INT DEFAULT 0;
+    ->     DECLARE vName VARCHAR(50);
+    ->
+    ->     DECLARE cur CURSOR FOR
+    ->         SELECT Name FROM Employees;
+    ->
+    ->     DECLARE CONTINUE HANDLER FOR NOT FOUND
+    ->         SET done = 1;
+    ->
+    ->     OPEN cur;
+    ->
+    ->     read_loop: LOOP
+    ->         FETCH cur INTO vName;
+    ->
+    ->         IF done = 1 THEN
+    ->             LEAVE read_loop;
+    ->         END IF;
+    ->
+    ->         INSERT INTO EmpNames VALUES (vName);
+    ->
+    ->     END LOOP;
+    ->
+    ->     CLOSE cur;
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql>
+mysql> -- Call Procedure
+mysql> CALL CollectEmployeeNames();
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> SELECT * FROM EmpNames;
++---------+
+| Name    |
++---------+
+| Alice   |
+| Bob     |
+| Charlie |
+| David   |
+| Eve     |
++---------+
+5 rows in set (0.00 sec)
+
+mysql>

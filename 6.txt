@@ -1,0 +1,196 @@
+PRACT_6
+spandan@MSIKATANA:/mnt/c/Users/Spandan$ sudo mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 15
+Server version: 8.0.45-0ubuntu0.24.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> -- Step 1: Database
+mysql> CREATE DATABASE IF NOT EXISTS abc;
+
+-- Step 2: Tables
+CREATE TABLE Departments (
+    DeptID INT PRIMARY KEY,
+    DeptName VARCHAR(50)
+);
+
+CREATE TABLE Employees (
+    EmpID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    DeptID INT,
+    Salary DECIMAL(10,2),
+    FOREIGN KEY (DeptID) REFERENCES Departments(DeptID)
+);
+
+-- Step 3: Insert Data
+INSERT INTO Departments VALUES
+(1, 'HR'),
+(2, 'IT'),
+(3, 'Finance');
+
+INSERT INTO Employees VALUES
+(101, 'Alice', 1, 50000),
+(102, 'Bob', 2, 60000),
+(103, 'Charlie', 3, 55000),
+(104, 'David', 2, 45000),
+(105, 'Query OK, 1 row affected, 1 warning (0.00 sec)
+
+Eve', 3, 70000);mysql> USE abc;
+
+
+-- Subquery 1
+SELECT EmpID, Name, Salary
+FROM Employees
+WHERE Salary > (SELECT AVG(Salary) FROM Employees);
+
+-- Subquery 2
+SELECT DeptName
+FROM Departments
+WHERE DeptID IN (
+    SELECT DeptIReading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+D FROM Employees WHERE Salary > 60000
+);
+
+-- Subquery 3
+SELECT EDatabase changed
+mysql>
+mysql> -- Step 2: Tables
+mysql> CREATE TABLE Departments (
+    ->     DeptID INT PRIMARY KEY,
+    ->     DeptName VARCHAR(50)
+    -> );
+ERROR 1050 (42S01): Table 'Departments' already exists
+mysql>
+mysql> CREATE TABLE Employees (
+    ->     EmpID INT PRIMARY KEY,
+    ->     Name VARCHAR(50),
+    ->     DeptID INT,
+    ->     Salary DECIMAL(10,2),
+    ->     FOREIGN KEY (DeptID) REFERENCES Departments(DeptID)
+    -> );
+N (
+    SELECT DERROR 1050 (42S01): Table 'Employees' already exists
+mysql>
+mysql> -- Step 3: Insert Data
+mysql> INSERT INTO Departments VALUES
+    -> (1, 'HR'),
+    -> (2, 'IT'),
+    -> (3, 'Finance');
+mployees
+    GROERROR 1062 (23000): Duplicate entry '1' for key 'Departments.PRIMARY'
+mysql>
+mysql> INSERT INTO Employees VALUES
+    -> (101, 'Alice', 1, 50000),
+    -> (102, 'Bob', 2, 60000),
+    -> (103, 'Charlie', 3, 55000),
+ HAVING COUNT(*)    -> (104, 'David', 2, 45000),
+    -> (105, 'Eve', 3, 70000);
+ > 1
+);
+
+-- Correlated Subquery
+ERROR 1062 (23000): Duplicate entry '101' for key 'Employees.PRIMARY'
+mysql>
+mysql> -- Subquery 1
+mysql> SELECT EmpID, Name, Salary
+    -> FROM Employees
+    -> WHERE Salary > (SELECT AVG(Salary) FROM Employees);
+me, DeptID, Salary
+FROM Employees e
+WHERE Salary = (
+    SELECT +-------+------+----------+
+| EmpID | Name | Salary   |
++-------+------+----------+
+|   102 | Bob  | 60000.00 |
+|   105 | Eve  | 70000.00 |
++-------+------+----------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> -- Subquery 2
+mysql> SELECT DeptName
+    -> FROM Departments
+    -> WHERE DeptID IN (
+FROM Employees
+     ->     SELECT DeptID FROM Employees WHERE Salary > 60000
+    -> );
+   WHERE DeptID +----------+
+| DeptName |
++----------+
+| Finance  |
++----------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> -- Subquery 3
+mysql> SELECT EmpID, Name, DeptID
+    -> FROM Employees
+    -> WHERE DeptID IN (
+    ->     SELECT DeptID
+    ->     FROM Employees
+    ->     GROUP BY DeptID
+    ->     HAVING COUNT(*) > 1
+    -> );
+ees;
+SELECT * FROM Departments;+-------+---------+--------+
+| EmpID | Name    | DeptID |
++-------+---------+--------+
+|   102 | Bob     |      2 |
+|   103 | Charlie |      3 |
+|   104 | David   |      2 |
+|   105 | Eve     |      3 |
++-------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> -- Correlated Subquery
+mysql> SELECT EmpID, Name, DeptID, Salary
+    -> FROM Employees e
+    -> WHERE Salary = (
+    ->     SELECT MAX(Salary)
+    ->     FROM Employees
+    ->     WHERE DeptID = e.DeptID
+    -> );
++-------+-------+--------+----------+
+| EmpID | Name  | DeptID | Salary   |
++-------+-------+--------+----------+
+|   101 | Alice |      1 | 50000.00 |
+|   102 | Bob   |      2 | 60000.00 |
+|   105 | Eve   |      3 | 70000.00 |
++-------+-------+--------+----------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql> -- View Data
+mysql> SELECT * FROM Employees;
++-------+---------+--------+----------+
+| EmpID | Name    | DeptID | Salary   |
++-------+---------+--------+----------+
+|   101 | Alice   |      1 | 50000.00 |
+|   102 | Bob     |      2 | 60000.00 |
+|   103 | Charlie |      3 | 55000.00 |
+|   104 | David   |      2 | 45000.00 |
+|   105 | Eve     |      3 | 70000.00 |
++-------+---------+--------+----------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT * FROM Departments;
++--------+----------+
+| DeptID | DeptName |
++--------+----------+
+|      1 | HR       |
+|      2 | IT       |
+|      3 | Finance  |
++--------+----------+
+3 rows in set (0.00 sec)
+
+mysql>

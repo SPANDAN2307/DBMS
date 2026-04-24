@@ -1,0 +1,226 @@
+PRACT_9
+spandan@MSIKATANA:/mnt/c/Users/Spandan$ mongosh
+Current Mongosh Log ID: 69e1c88509a794010e44ba88
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.8.2
+Using MongoDB:          7.0.31
+Using Mongosh:          2.8.2
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2026-04-17T05:36:25.345+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2026-04-17T05:36:25.451+00:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use mydb
+switched to db mydb
+mydb> db.sales.drop()
+|
+| db.createCollection("sales")
+|
+| db.sales.insertMany([
+|   { product: "Laptop", region: "North", quantity: 5, price: 60000 },
+|   { product: "Laptop", region: "South", quantity: 3, price: 62000 },
+|   { product: "Phone", region: "North", quantity: 10, price: 20000 },
+|   { product: "Phone", region: "South", quantity: 8, price: 21000 },
+|   { product: "Tablet", region: "East", quantity: 4, price: 30000 },
+|   { product: "Tablet", region: "West", quantity: 6, price: 32000 },
+|   { product: "Laptop", region: "East", quantity: 2, price: 61000 },
+|   { product: "Phone", region: "West", quantity: 12, price: 19000 }
+| ])
+|
+| db.sales.find().pretty()
+|
+[
+  {
+    _id: ObjectId('69e1c8a409a794010e44ba89'),
+    product: 'Laptop',
+    region: 'North',
+    quantity: 5,
+    price: 60000
+  },
+  {
+    _id: ObjectId('69e1c8a409a794010e44ba8a'),
+    product: 'Laptop',
+    region: 'South',
+    quantity: 3,
+    price: 62000
+  },
+  {
+    _id: ObjectId('69e1c8a409a794010e44ba8b'),
+    product: 'Phone',
+    region: 'North',
+    quantity: 10,
+    price: 20000
+  },
+  {
+    _id: ObjectId('69e1c8a409a794010e44ba8c'),
+    product: 'Phone',
+    region: 'South',
+    quantity: 8,
+    price: 21000
+  },
+  {
+    _id: ObjectId('69e1c8a409a794010e44ba8d'),
+    product: 'Tablet',
+    region: 'East',
+    quantity: 4,
+    price: 30000
+  },
+  {
+    _id: ObjectId('69e1c8a409a794010e44ba8e'),
+    product: 'Tablet',
+    region: 'West',
+    quantity: 6,
+    price: 32000
+  },
+  {
+    _id: ObjectId('69e1c8a409a794010e44ba8f'),
+    product: 'Laptop',
+    region: 'East',
+    quantity: 2,
+    price: 61000
+  },
+  {
+    _id: ObjectId('69e1c8a409a794010e44ba90'),
+    product: 'Phone',
+    region: 'West',
+    quantity: 12,
+    price: 19000
+  }
+]
+mydb> db.sales.aggregate([
+|   {
+|     $group: {
+|       _id: "$region",
+|       totalQuantity: { $sum: "$quantity" },
+|       avgPrice: { $avg: "$price" },
+|       maxPrice: { $max: "$price" },
+|       minPrice: { $min: "$price" }
+|     }
+|   }
+| ])
+|
+[
+  {
+    _id: 'West',
+    totalQuantity: 18,
+    avgPrice: 25500,
+    maxPrice: 32000,
+    minPrice: 19000
+  },
+  {
+    _id: 'North',
+    totalQuantity: 15,
+    avgPrice: 40000,
+    maxPrice: 60000,
+    minPrice: 20000
+  },
+  {
+    _id: 'South',
+    totalQuantity: 11,
+    avgPrice: 41500,
+    maxPrice: 62000,
+    minPrice: 21000
+  },
+  {
+    _id: 'East',
+    totalQuantity: 6,
+    avgPrice: 45500,
+    maxPrice: 61000,
+    minPrice: 30000
+  }
+]
+mydb> db.sales.aggregate([
+|   { $group: { _id: "$product", totalSold: { $sum: "$quantity" } } },
+|   { $match: { totalSold: { $gt: 10 } } }
+| ])
+|
+[ { _id: 'Phone', totalSold: 30 } ]
+mydb> db.sales.aggregate([
+|   {
+|     $group: {
+|       _id: { product: "$product", region: "$region" },
+|       countSales: { $sum: 1 }
+|     }
+|   }
+| ])
+|
+[
+  { _id: { product: 'Tablet', region: 'East' }, countSales: 1 },
+  { _id: { product: 'Tablet', region: 'West' }, countSales: 1 },
+  { _id: { product: 'Laptop', region: 'East' }, countSales: 1 },
+  { _id: { product: 'Phone', region: 'South' }, countSales: 1 },
+  { _id: { product: 'Phone', region: 'North' }, countSales: 1 },
+  { _id: { product: 'Laptop', region: 'South' }, countSales: 1 },
+  { _id: { product: 'Laptop', region: 'North' }, countSales: 1 },
+  { _id: { product: 'Phone', region: 'West' }, countSales: 1 }
+]
+mydb> db.sales.getIndexes()
+|
+[ { v: 2, key: { _id: 1 }, name: '_id_' } ]
+mydb> db.sales.find({ product: "Laptop" }).explain("executionStats")
+|
+{
+  explainVersion: '1',
+  queryPlanner: {
+    namespace: 'mydb.sales',
+    indexFilterSet: false,
+    parsedQuery: { product: { '$eq': 'Laptop' } },
+    queryHash: '48A7AE5F',
+    planCacheKey: '48A7AE5F',
+    optimizationTimeMillis: 0,
+    maxIndexedOrSolutionsReached: false,
+    maxIndexedAndSolutionsReached: false,
+    maxScansToExplodeReached: false,
+    winningPlan: {
+      stage: 'COLLSCAN',
+      filter: { product: { '$eq': 'Laptop' } },
+      direction: 'forward'
+    },
+    rejectedPlans: []
+  },
+  executionStats: {
+    executionSuccess: true,
+    nReturned: 3,
+    executionTimeMillis: 0,
+    totalKeysExamined: 0,
+    totalDocsExamined: 8,
+    executionStages: {
+      stage: 'COLLSCAN',
+      filter: { product: { '$eq': 'Laptop' } },
+      nReturned: 3,
+      executionTimeMillisEstimate: 0,
+      works: 9,
+      advanced: 3,
+      needTime: 5,
+      needYield: 0,
+      saveState: 0,
+      restoreState: 0,
+      isEOF: 1,
+      direction: 'forward',
+      docsExamined: 8
+    }
+  },
+  command: { find: 'sales', filter: { product: 'Laptop' }, '$db': 'mydb' },
+  serverInfo: {
+    host: 'MSIKATANA',
+    port: 27017,
+    version: '7.0.31',
+    gitVersion: '6a3bdfa2794c261d3ce011c74f818e970e563609'
+  },
+  serverParameters: {
+    internalQueryFacetBufferSizeBytes: 104857600,
+    internalQueryFacetMaxOutputDocSizeBytes: 104857600,
+    internalLookupStageIntermediateDocumentMaxSizeBytes: 104857600,
+    internalDocumentSourceGroupMaxMemoryBytes: 104857600,
+    internalQueryMaxBlockingSortMemoryUsageBytes: 104857600,
+    internalQueryProhibitBlockingMergeOnMongoS: 0,
+    internalQueryMaxAddToSetBytes: 104857600,
+    internalDocumentSourceSetWindowFieldsMaxMemoryBytes: 104857600,
+    internalQueryFrameworkControl: 'forceClassicEngine'
+  },
+  ok: 1
+}
+mydb>
