@@ -1,0 +1,22 @@
+Assignment No. - 10
+Title: Aggregation and Indexing in MongoDB.
+
+Aggregations operations process data records and return computed results. Aggregation operations group values from multiple documents together.
+>db.COLLECTION_NAME.aggregate(AGGREGATE_OPERATION)
+
+Aggregation Framework Stages:
+$project: Used to select some specific fields from a collection.
+$match: Filtering operation.
+$group: Actual aggregation.
+$sort: Sorts the documents.
+$skip: Skip forward in the list of documents.
+$limit: Limits the amount of documents to look at.
+$unwind: Used to unwind document that are using arrays.
+
+Expressions: $sum, $avg, $min, $max, $push, $addToSet, $first, $last.
+
+Indexes: support the efficient resolution of queries. Without indexes, MongoDB must scan every document of a collection.
+THE ENSUREINDEX() METHOD:
+>db.COLLECTION_NAME.ensureIndex({KEY:1}) (1 for ascending, -1 for descending)
+You can pass multiple fields to create index on multiple fields.
+ensureIndex() accepts list of options: background, unique, name, dropDups, sparse, expireAfterSeconds, v, weights, default_language, language_override.

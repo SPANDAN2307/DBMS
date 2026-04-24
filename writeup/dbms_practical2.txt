@@ -1,0 +1,34 @@
+Assignment No. - 2
+Title: SQL Data Definition Language commands. 
+Problem Statement: Write and execute SQL Data Definition Language (DDL) commands such as CREATE, ALTER, DROP, RENAME, and TRUNCATE to define and modify tables. Insert data into the tables and apply appropriate integrity constraints such as NOT NULL, UNIQUE, PRIMARY KEY, FOREIGN KEY, and CHECK.
+
+DATA TYPES:
+1. CHAR (Size)
+2. VARCHAR (Size) / VARCHAR2 (Size)
+3. NUMBER (P, S)
+4. DATE
+5. LONG
+6. RAW
+
+SQL language is sub-divided into several language elements, including: Clauses, Expressions, Predicates, Queries, Statements.
+
+1. DATA DEFINITION LANGUAGE (DDL):
+1. CREATE: CREATE TABLE <relation_name>
+2. ALTER: ALTER TABLE ...ADD... or ALTER TABLE...MODIFY... or ALTER TABLE..DROP... or ALTER TABLE..RENAME...
+3. DROP TABLE: DROP TABLE relation_name;
+4. RENAME: RENAME TABLE old_relation_name TO new_relation_name;
+5. TRUNCATE: TRUNCATE TABLE table_name;
+
+CONSTRAINTS:
+1. NOT NULL
+2. UNIQUE
+3. CHECK
+4. PRIMARY KEY
+5. FOREIGN KEY
+6. DEFAULT
+
+Defining integrity constraints in the alter table command:
+ALTER TABLE Table_Name ADD PRIMARY KEY (column_name);
+
+Dropping integrity constraints:
+ALTER TABLE Table_Name DROP constraint_name;

@@ -1,0 +1,32 @@
+Assignment No. 1: Title : Case Study and ER diagram.
+
+Title: Develop a case study and design its Entity Relationship (ER) Diagram. Convert the ER Model into a relational model.
+
+Theory: Entity-Relationship model is used in the conceptual design of a database. Design is independent of all physical considerations.
+Entity: real-world object or thing with an independent existence.
+Relationships, Relationship Types, and Relationship Sets
+Degree of a relationship: refers to the number of entity types that participate in the relationship type (binary, ternary, etc.).
+Roles: The same entity type can participate more than once in a relationship type.
+Relationship Attributes: A relationship type can have attributes describing properties of a relationship.
+
+A simple ER Diagram:
+Rectangle: Represents Entity sets.
+Ellipses: Attributes
+Diamonds: Relationship Set
+Lines: They link attributes to Entity Sets and Entity sets to Relationship Set
+Double Ellipses: Multivalued Attributes
+Dashed Ellipses: Derived Attributes
+Double Rectangles: Weak Entity Sets
+
+Conversion of ER diagram to Table:
+- Entity type becomes a table.
+- All single-valued attribute becomes a column for the table.
+- A key attribute of the entity type represented by the primary key.
+- Composite attribute represented by components.
+- Derived attributes are not considered in the table.
+
+Normalization: Normalization is a process that “improves” a database design by generating relations that are of higher normal forms.
+1NF: should only have single(atomic) valued attributes/columns.
+2NF: should be in the First Normal form, and should not have Partial Dependency.
+3NF: should be in the Second Normal form, and doesn't have Transitive Dependency.
+BCNF: extension to the third normal form, for any dependency A → B, A should be a super key.

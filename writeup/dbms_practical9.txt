@@ -1,0 +1,26 @@
+Assignment No. - 9
+Title: CRUD Operations using MongoDB.
+
+Difference between SQL and NOSQL:
+SQL: Relational Databases, Table-based, Designed for scaling up vertically, Great for highly structured data.
+NoSQL: Non-relational Databases, Key-value pairs / Document-based / Graph databases / Wide-column stores, Designed for scaling out horizontally, Pairs well with agile development.
+
+MongoDB:
+MongoDB is a cross-platform, document oriented database that provides high performance, high availability, and easy scalability.
+Collection: Group of MongoDB documents (equivalent of RDBMS table).
+Document: A set of key-value pairs with dynamic schema.
+
+MongoDB Commands:
+use DATABASE_NAME - Create/Switch database
+db.dropDatabase() - Drop database
+db.createCollection(name, options) - Create collection
+db.COLLECTION_NAME.drop() - Drop collection
+db.COLLECTION_NAME.insert(document) - Insert data
+db.COLLECTION_NAME.find().pretty() - Query data
+db.COLLECTION_NAME.find({ $or: [ {key1: value1}, {key2:value2} ] }) - OR condition
+db.COLLECTION_NAME.update(SELECTIOIN_CRITERIA, UPDATED_DATA) - Update document
+db.COLLECTION_NAME.save({_id:ObjectId(),NEW_DATA}) - Save document
+db.COLLECTION_NAME.remove(DELETION_CRITERIA,1) - Remove document
+db.COLLECTION_NAME.find().limit(NUMBER) - Limit records
+db.COLLECTION_NAME.find().limit(NUMBER).skip(NUMBER) - Skip records
+db.COLLECTION_NAME.find().sort({KEY:1}) - Sort records (1 for ascending, -1 for descending)

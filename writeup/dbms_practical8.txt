@@ -1,0 +1,26 @@
+Assignment No. - 8
+Title: Database Triggers.
+
+DATABASE TRIGGERS:-
+A database trigger is a PL/SQL program unit, which gets fired automatically whenever the data event such as DML or DDL system event occurs.
+Triggers are similar to procedures but are executed implicitly. A database trigger has following components: A triggering Event, A triggering Constraint, A triggering Action.
+
+Trigger types:
+1. Statement Trigger: executed once for the manipulation operation that fires the trigger.
+2. Row Trigger: trigger action is performed repeatedly for each row of the table that is affected.
+
+Triggering time:
+Before the triggering event
+After the triggering event
+
+Triggering Events:
+INSERT TRIGGER, DELETE TRIGGER, UPDATE TRIGGER
+
+General syntax for creation of Trigger:
+Create [or replace] TRIGGER <trigger_name>
+<BEFORE | AFTER> DELETE | [OR] INSERT | [OR] UPDATE [OF <column1>[,<column2>…..]]
+ON <table_name>
+[for each row [when <condition>] Begin ... End;
+
+Dropping trigger: Drop trigger trigger_name;
+Enabling and Disabling Triggers: Alter TRIGGER trigger_name DISABLE/ENABLE;

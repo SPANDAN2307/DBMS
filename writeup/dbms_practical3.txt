@@ -1,0 +1,24 @@
+Assignment No. - 3
+Title: SQL Queries for Data Manipulation, Access Control, and Transactions.
+
+a) DATA MANIPULATION LANGUAGE (DML): 
+1. INSERT INTO: Inserting a single record or multiple records.
+2. UPDATE-SET-WHERE: Used to update the content of a record in a relation.
+3. DELETE-FROM: Used to delete records of a relation.
+
+ARITHMETIC OPERATORS: (+), (-), (*), (/), (^)
+LOGICAL OPERATORS: AND, OR, NOT
+COMPARISON OPERATORS: (=), (!=), (< >), (>), (<), (>=), (<=)
+PATTERN MATCHING: BETWEEN, IS NULL, ALL, ANY, LIKE, IN, EXIST
+
+c) Access Control DCL Language commands:
+GRANT, REVOKE, and ROLE commands to manage user access.
+CREATE USER: CREATE USER < username> IDENTIFIED BY <password>
+GRANT: GRANT privilege TO USER;
+REVOKE: REVOKE [privilege] ON object FROM user;
+ROLE: A role is a named group of related privileges.
+
+C) Transaction Control (TCL): 
+1. COMMIT: Used to end a transaction and make changes permanent.
+2. SAVE POINT: Marks to divide a very lengthy transaction.
+3. ROLLBACK: Undo the current transactions.

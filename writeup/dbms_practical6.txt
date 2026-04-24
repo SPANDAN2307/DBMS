@@ -1,0 +1,11 @@
+Assignment No. - 6
+Title: Study & Implementation of sub-queries.
+
+Theory:
+SUBQUERIES: The query within another is known as a sub query. A statement containing sub query is called parent statement.
+You can place the subquery in a number of SQL clauses: WHERE clause, HAVING clause, FROM clause.
+
+Types:
+1. Sub queries that return several values: Such results should be made use along with the operators in and any.
+2. Multiple queries: Here more than one sub query is used. These multiple sub queries are combined by means of ‘and’ & ‘or’ keywords.
+3. Correlated sub query: A sub query is evaluated once for the entire parent statement whereas a correlated Sub query is evaluated once per row processed by the parent statement.

@@ -1,0 +1,14 @@
+Assignment No. - 4
+Title: Aggregate Functions and Grouping.
+
+SQL Queries for aggregate functions along with GROUP BY and HAVING clauses to retrieve summarized data from the database.
+
+Theory: 
+GROUP BY: This query is used to group to all the records in a relation together for each and every value of a specific key(s).
+GROUP BY-HAVING: The HAVING clause was added to SQL because the WHERE keyword could not be used with aggregate functions.
+JOIN using GROUP BY: This query is used to display a set of fields from two relations by matching a common field in them and also group the corresponding records.
+ORDER BY: This query is used to display a selected set of fields from a relation in an ordered manner.
+JOIN using ORDER BY: Display a set of fields from two relations by matching a common field in them in an ordered manner.
+
+INDEXING: An index is an ordered set of pointers to the data in a table. It improves performance and ensures uniqueness.
+Syntax: CREATE INDEX <index_name> on <table_name> (attrib1,attrib2….attrib n);

@@ -1,0 +1,21 @@
+Assignment No. - 5
+Title: JOIN Operations and Views.
+
+Types of Joins:
+1. Simple Join
+Equi-join: A join, which is based on equalities, is called equi-join.
+Non Equi-join: It specifies the relationship between columns belonging to different tables by making use of relational operators other than’=’.
+Table Aliases: Table aliases are used to make multiple table queries shorted and more readable.
+
+2. Self join: Joining of a table to itself is known as self-join.
+
+3. Outer Join: It extends the result of a simple join. 
+– Left outer join
+– Right outer join
+– Full outer join
+
+VIEW:
+In SQL, a view is a virtual table based on the result-set of an SQL statement.
+CREATE VIEW <view_name> AS SELECT <set of fields> FROM relation_name WHERE (Condition)
+UPDATING A VIEW: CREATE OR REPLACE VIEW view_name AS SELECT column_name(s) FROM table_name WHERE condition
+DROPPING A VIEW: DROP VIEW <view_name>;

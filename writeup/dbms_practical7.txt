@@ -1,0 +1,23 @@
+Assignment No. - 7
+Title: Stored Procedures or Function with Cursors.
+
+Theory: CURSOR:-
+For the processing of any SQL statement, database needs to allocate memory. This memory is called context area. A cursor is a pointer to this context area.
+
+THERE ARE TWO TYPES OF CURSORS.
+1. Implicit cursor: Defined by ORACLE implicitly for every DML statements. Attributes include %FOUND, %NOTFOUND, %ROWCOUNT and %ISOPEN.
+2. Explicit cursor: User-defined cursors which are defined in the declaration section.
+Steps:
+- Declare the cursor
+- Open the cursor
+- Fetch the cursor
+- Close the cursor
+
+Syntax for explicit cursor declaration:
+CURSOR name IS SELECT statement;
+OPEN cursor_name;
+FETCH cursor_name INTO variable_list;
+Close cursor_name;
+
+Drawbacks of Implicit Cursors:
+It is less efficient than an explicit cursor. It is more vulnerable to data errors. It gives you less programmatic control.
