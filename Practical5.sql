@@ -1,33 +1,33 @@
-DROP TABLE IF EXISTS Employees;
-DROP TABLE IF EXISTS Departments;
+DROP TABLE IF EXISTS table_xyz;
+DROP TABLE IF EXISTS table_abc;
 
-CREATE TABLE Departments (
-    DeptID INT PRIMARY KEY,
-    DeptName VARCHAR(50)
+CREATE TABLE table_abc (
+    id INT PRIMARY KEY,
+    name VARCHAR(50)
 );
 
-CREATE TABLE Employees (
-    EmpID INT PRIMARY KEY,
-    Name VARCHAR(50),
-    DeptID INT,
-    Salary DECIMAL(10,2),
-    FOREIGN KEY (DeptID) REFERENCES Departments(DeptID)
+CREATE TABLE table_xyz (
+    id INT PRIMARY KEY,
+    info VARCHAR(50),
+    ref_id INT,
+    val DECIMAL(10,2),
+    FOREIGN KEY (ref_id) REFERENCES table_abc(id)
 );
 
-INSERT INTO Departments VALUES (1, 'HR'), (2, 'IT');
-INSERT INTO Employees VALUES (101, 'Alice', 1, 50000), (102, 'Bob', 2, 60000);
+INSERT INTO table_abc VALUES (123, 'abc'), (345, 'xyz');
+INSERT INTO table_xyz VALUES (12, 'pqr', 123, 123.00), (34, 'def', 345, 345.00);
 
-SELECT e.EmpID, e.Name, d.DeptName, e.Salary
-FROM Employees e INNER JOIN Departments d ON e.DeptID = d.DeptID;
+SELECT x.id, x.info, a.name, x.val
+FROM table_xyz x INNER JOIN table_abc a ON x.ref_id = a.id;
 
-SELECT e.EmpID, e.Name, d.DeptName
-FROM Employees e LEFT JOIN Departments d ON e.DeptID = d.DeptID;
+SELECT x.id, x.info, a.name
+FROM table_xyz x LEFT JOIN table_abc a ON x.ref_id = a.id;
 
-SELECT e.EmpID, e.Name, d.DeptName
-FROM Employees e RIGHT JOIN Departments d ON e.DeptID = d.DeptID;
+SELECT x.id, x.info, a.name
+FROM table_xyz x RIGHT JOIN table_abc a ON x.ref_id = a.id;
 
-CREATE OR REPLACE VIEW EmployeeDetails AS
-SELECT e.EmpID, e.Name, d.DeptName, e.Salary
-FROM Employees e INNER JOIN Departments d ON e.DeptID = d.DeptID;
+CREATE OR REPLACE VIEW view_abc AS
+SELECT x.id, x.info, a.name, x.val
+FROM table_xyz x INNER JOIN table_abc a ON x.ref_id = a.id;
 
-DROP VIEW EmployeeDetails;
+DROP VIEW view_abc;

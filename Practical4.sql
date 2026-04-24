@@ -1,23 +1,23 @@
-DROP TABLE IF EXISTS Sales;
+DROP TABLE IF EXISTS table_abc;
 
-CREATE TABLE Sales (
-    SaleID INT PRIMARY KEY,
-    Product VARCHAR(50),
-    Quantity INT,
-    Price DECIMAL(10,2),
-    Region VARCHAR(50)
+CREATE TABLE table_abc (
+    id INT PRIMARY KEY,
+    item VARCHAR(50),
+    qty INT,
+    val DECIMAL(10,2),
+    cat VARCHAR(50)
 );
 
-INSERT INTO Sales VALUES
-(1, 'Laptop', 5, 60000, 'North'),
-(2, 'Laptop', 3, 62000, 'South'),
-(3, 'Phone', 10, 20000, 'North');
+INSERT INTO table_abc VALUES
+(123, 'abc', 12, 123.00, 'xyz'),
+(345, 'abc', 34, 345.00, 'pqr'),
+(678, 'def', 56, 678.00, 'xyz');
 
-SELECT Region, SUM(Quantity) AS Total_Quantity, AVG(Price) AS Avg_Price, MAX(Price) AS Max_Price, MIN(Price) AS Min_Price
-FROM Sales
-GROUP BY Region;
+SELECT cat, SUM(qty) AS total_qty, AVG(val) AS avg_val, MAX(val) AS max_val, MIN(val) AS min_val
+FROM table_abc
+GROUP BY cat;
 
-SELECT Product, SUM(Quantity) AS Total_Sold
-FROM Sales
-GROUP BY Product
-HAVING SUM(Quantity) > 10;
+SELECT item, SUM(qty) AS total_sold
+FROM table_abc
+GROUP BY item
+HAVING SUM(qty) > 12;

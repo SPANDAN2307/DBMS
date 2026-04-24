@@ -1,41 +1,41 @@
-CREATE DATABASE IF NOT EXISTS Practicals;
-USE Practicals;
+CREATE DATABASE IF NOT EXISTS abc_db;
+USE abc_db;
 
-DROP TABLE IF EXISTS Students;
-DROP TABLE IF EXISTS Courses;
+DROP TABLE IF EXISTS table_xyz;
+DROP TABLE IF EXISTS table_abc;
 
-CREATE TABLE Courses (
-    course_id INT PRIMARY KEY,
-    course_name VARCHAR(100) NOT NULL,
-    credits INT CHECK (credits > 0)
+CREATE TABLE table_abc (
+    id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    val INT CHECK (val > 0)
 );
 
-CREATE TABLE Students (
-    student_id INT PRIMARY KEY,
+CREATE TABLE table_xyz (
+    id INT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE,
     age INT CHECK (age >= 18),
-    course_id INT,
-    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+    ref_id INT,
+    FOREIGN KEY (ref_id) REFERENCES table_abc(id)
 );
 
-INSERT INTO Courses VALUES 
-(101, 'Database Systems', 4),
-(102, 'Computer Architecture', 3);
+INSERT INTO table_abc VALUES 
+(123, 'abc', 12),
+(345, 'xyz', 34);
 
-INSERT INTO Students VALUES 
-(1, 'Harshal', 'harshal@example.com', 20, 101),
-(2, 'Shubbu', 'shubbu@example.com', 22, 102);
+INSERT INTO table_xyz VALUES 
+(1, 'abc', 'abc@xyz.com', 20, 123),
+(2, 'xyz', 'xyz@abc.com', 22, 345);
 
-SELECT * FROM Students;
-SELECT * FROM Courses;
+SELECT * FROM table_xyz;
+SELECT * FROM table_abc;
 
-ALTER TABLE Students ADD phone VARCHAR(15);
-ALTER TABLE Students MODIFY email VARCHAR(150);
-ALTER TABLE Students DROP COLUMN phone;
+ALTER TABLE table_xyz ADD info VARCHAR(15);
+ALTER TABLE table_xyz MODIFY email VARCHAR(150);
+ALTER TABLE table_xyz DROP COLUMN info;
 
-RENAME TABLE Students TO Learners;
+RENAME TABLE table_xyz TO table_pqr;
 
-TRUNCATE TABLE Learners;
-DROP TABLE Learners;
-DROP TABLE Courses;
+TRUNCATE TABLE table_pqr;
+DROP TABLE table_pqr;
+DROP TABLE table_abc;

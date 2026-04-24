@@ -1,13 +1,13 @@
-use mydb
+use abc_db
 
-db.sales.aggregate([
-  { $group: { _id: "$product", totalSold: { $sum: "$quantity" } } },
-  { $match: { totalSold: { $gt: 5 } } }
+db.table_abc.aggregate([
+  { $group: { _id: "$item", totalSold: { $sum: "$qty" } } },
+  { $match: { totalSold: { $gt: 12 } } }
 ])
 
-db.sales.createIndex({ product: 1 })
-db.sales.createIndex({ region: 1, product: 1 })
+db.table_abc.createIndex({ item: 1 })
+db.table_abc.createIndex({ cat: 1, item: 1 })
 
-db.sales.getIndexes()
+db.table_abc.getIndexes()
 
-db.sales.find({ product: "Laptop" }).explain("executionStats")
+db.table_abc.find({ item: "abc" }).explain("executionStats")

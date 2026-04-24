@@ -1,32 +1,33 @@
-DROP TABLE IF EXISTS Employees;
+DROP TABLE IF EXISTS table_abc;
 
-CREATE TABLE Employees (
-    EmpID INT PRIMARY KEY,
-    Name VARCHAR(50),
-    Salary DECIMAL(10,2),
-    Department VARCHAR(50)
+CREATE TABLE table_abc (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    val DECIMAL(10,2),
+    dept VARCHAR(50)
 );
 
-INSERT INTO Employees VALUES
-(1, 'Alice', 50000, 'HR'),
-(2, 'Bob', 60000, 'IT'),
-(3, 'Charlie', 55000, 'Finance'),
-(4, 'David', 45000, 'IT');
+INSERT INTO table_abc VALUES
+(123, 'abc', 123.00, 'xyz'),
+(345, 'def', 345.00, 'pqr'),
+(678, 'ghi', 678.00, 'xyz');
 
-UPDATE Employees SET Salary = Salary + 5000 WHERE Department = 'IT';
+INSERT INTO table_abc VALUES (901, 'jkl', 901.00, 'pqr');
 
-DELETE FROM Employees WHERE Name LIKE 'D%';
+UPDATE table_abc SET val = val + 123 WHERE dept = 'pqr';
 
-UPDATE Employees SET Name = CONCAT(Name, '_Updated') WHERE Salary > 55000 AND Department IN ('Finance','IT');
+DELETE FROM table_abc WHERE name LIKE 'a%';
 
-CREATE ROLE IF NOT EXISTS hr_role;
-GRANT SELECT, INSERT ON Employees TO hr_role;
-GRANT hr_role TO 'hr_user'@'localhost';
-REVOKE INSERT ON Employees FROM hr_role;
+UPDATE table_abc SET name = CONCAT(name, '_xyz') WHERE val > 123 AND dept IN ('xyz','pqr');
+
+CREATE ROLE IF NOT EXISTS role_abc;
+GRANT SELECT, INSERT ON table_abc TO role_abc;
+GRANT role_abc TO 'abc_user'@'localhost';
+REVOKE INSERT ON table_abc FROM role_abc;
 
 START TRANSACTION;
-UPDATE Employees SET Salary = Salary - 2000 WHERE EmpID = 1;
+UPDATE table_abc SET val = val - 12 WHERE id = 123;
 SAVEPOINT sp1;
-UPDATE Employees SET Salary = Salary - 2000 WHERE EmpID = 2;
+UPDATE table_abc SET val = val - 34 WHERE id = 345;
 ROLLBACK TO sp1;
 COMMIT;

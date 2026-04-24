@@ -1,30 +1,30 @@
-DROP TABLE IF EXISTS Employees;
-DROP TABLE IF EXISTS Departments;
+DROP TABLE IF EXISTS table_xyz;
+DROP TABLE IF EXISTS table_abc;
 
-CREATE TABLE Departments (
-    DeptID INT PRIMARY KEY,
-    DeptName VARCHAR(50)
+CREATE TABLE table_abc (
+    id INT PRIMARY KEY,
+    name VARCHAR(50)
 );
 
-CREATE TABLE Employees (
-    EmpID INT PRIMARY KEY,
-    Name VARCHAR(50),
-    DeptID INT,
-    Salary DECIMAL(10,2),
-    FOREIGN KEY (DeptID) REFERENCES Departments(DeptID)
+CREATE TABLE table_xyz (
+    id INT PRIMARY KEY,
+    info VARCHAR(50),
+    ref_id INT,
+    val DECIMAL(10,2),
+    FOREIGN KEY (ref_id) REFERENCES table_abc(id)
 );
 
-INSERT INTO Departments VALUES (1, 'HR'), (2, 'IT');
-INSERT INTO Employees VALUES (101, 'Alice', 1, 50000), (102, 'Bob', 2, 60000);
+INSERT INTO table_abc VALUES (123, 'abc'), (345, 'xyz');
+INSERT INTO table_xyz VALUES (12, 'pqr', 123, 123.00), (34, 'def', 345, 345.00);
 
-SELECT EmpID, Name, Salary FROM Employees 
-WHERE Salary > (SELECT AVG(Salary) FROM Employees);
+SELECT id, info, val FROM table_xyz 
+WHERE val > (SELECT AVG(val) FROM table_xyz);
 
-SELECT DeptName FROM Departments 
-WHERE DeptID IN (SELECT DeptID FROM Employees WHERE Salary > 50000);
+SELECT name FROM table_abc 
+WHERE id IN (SELECT ref_id FROM table_xyz WHERE val > 123);
 
-SELECT EmpID, Name, DeptID FROM Employees 
-WHERE DeptID IN (SELECT DeptID FROM Employees GROUP BY DeptID HAVING COUNT(*) > 1);
+SELECT id, info, ref_id FROM table_xyz 
+WHERE ref_id IN (SELECT ref_id FROM table_xyz GROUP BY ref_id HAVING COUNT(*) > 1);
 
-SELECT EmpID, Name, DeptID, Salary FROM Employees e 
-WHERE Salary = (SELECT MAX(Salary) FROM Employees WHERE DeptID = e.DeptID);
+SELECT id, info, ref_id, val FROM table_xyz x 
+WHERE val = (SELECT MAX(val) FROM table_xyz WHERE ref_id = x.ref_id);
