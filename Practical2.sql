@@ -20,11 +20,13 @@ CREATE TABLE table_xyz (
 );
 
 INSERT INTO table_abc VALUES 
-(123, 'abc', 12),
+(123, 'abc', 12);
+INSERT INTO table_abc VALUES 
 (345, 'xyz', 34);
 
 INSERT INTO table_xyz VALUES 
-(1, 'abc', 'abc@xyz.com', 20, 123),
+(1, 'abc', 'abc@xyz.com', 20, 123);
+INSERT INTO table_xyz VALUES 
 (2, 'xyz', 'xyz@abc.com', 22, 345);
 
 SELECT * FROM table_xyz;
