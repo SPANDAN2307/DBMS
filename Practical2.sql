@@ -1,6 +1,7 @@
 CREATE DATABASE IF NOT EXISTS abc_db;
 USE abc_db;
 
+DROP TABLE IF EXISTS table_pqr;
 DROP TABLE IF EXISTS table_xyz;
 DROP TABLE IF EXISTS table_abc;
 
@@ -20,17 +21,15 @@ CREATE TABLE table_xyz (
 );
 
 INSERT INTO table_abc VALUES 
-(123, 'abc', 12);
-INSERT INTO table_abc VALUES 
-(345, 'xyz', 34);
+(1, 'abc_dept', 10),
+(2, 'xyz_dept', 20);
 
 INSERT INTO table_xyz VALUES 
-(1, 'abc', 'abc@xyz.com', 20, 123);
-INSERT INTO table_xyz VALUES 
-(2, 'xyz', 'xyz@abc.com', 22, 345);
+(101, 'abc_user', 'abc@xyz.com', 20, 1),
+(102, 'xyz_user', 'xyz@abc.com', 22, 2);
 
-SELECT * FROM table_xyz;
 SELECT * FROM table_abc;
+SELECT * FROM table_xyz;
 
 ALTER TABLE table_xyz ADD info VARCHAR(15);
 ALTER TABLE table_xyz MODIFY email VARCHAR(150);
@@ -39,5 +38,6 @@ ALTER TABLE table_xyz DROP COLUMN info;
 RENAME TABLE table_xyz TO table_pqr;
 
 TRUNCATE TABLE table_pqr;
+
 DROP TABLE table_pqr;
 DROP TABLE table_abc;

@@ -10,18 +10,19 @@ CREATE TABLE table_xyz (
     id INT PRIMARY KEY,
     info VARCHAR(50),
     ref_id INT,
-    val DECIMAL(10,2),
+    val INT,
     FOREIGN KEY (ref_id) REFERENCES table_abc(id)
 );
 
-INSERT INTO table_abc VALUES (123, 'abc'), (345, 'xyz');
-INSERT INTO table_xyz VALUES (12, 'pqr', 123, 123.00), (34, 'def', 345, 345.00);
+INSERT INTO table_abc VALUES (1, 'dept_A'), (2, 'dept_B');
+
+INSERT INTO table_xyz VALUES (101, 'emp_X', 1, 5000), (102, 'emp_Y', 2, 7000), (103, 'emp_Z', 1, 6000);
 
 SELECT id, info, val FROM table_xyz 
 WHERE val > (SELECT AVG(val) FROM table_xyz);
 
 SELECT name FROM table_abc 
-WHERE id IN (SELECT ref_id FROM table_xyz WHERE val > 123);
+WHERE id IN (SELECT ref_id FROM table_xyz WHERE val > 5500);
 
 SELECT id, info, ref_id FROM table_xyz 
 WHERE ref_id IN (SELECT ref_id FROM table_xyz GROUP BY ref_id HAVING COUNT(*) > 1);
